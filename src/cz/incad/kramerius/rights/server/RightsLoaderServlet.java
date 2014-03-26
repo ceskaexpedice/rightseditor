@@ -1,21 +1,20 @@
 package cz.incad.kramerius.rights.server;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.servlet.ServletException;
-
+import cz.incad.kramerius.rights.server.views.UserView;
 import org.aplikator.client.local.command.ListEntities;
 import org.aplikator.server.ApplicationLoaderServlet;
 import org.aplikator.server.descriptor.Application;
 import org.aplikator.server.descriptor.Menu;
 
-import cz.incad.kramerius.rights.server.views.UserView;
+import javax.servlet.ServletException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("serial")
 public class RightsLoaderServlet extends ApplicationLoaderServlet {
 
     private static final Logger LOG = Logger.getLogger(RightsLoaderServlet.class.getName());
+
 
     @Override
     public void init() throws ServletException {
