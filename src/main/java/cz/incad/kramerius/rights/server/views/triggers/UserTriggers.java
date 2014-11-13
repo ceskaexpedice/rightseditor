@@ -7,6 +7,7 @@ import cz.incad.kramerius.rights.server.utils.GetAdminGroupIds;
 import cz.incad.kramerius.rights.server.utils.GetCurrentLoggedUser;
 import cz.incad.kramerius.security.User;
 import cz.incad.kramerius.security.utils.PasswordDigest;
+import org.aplikator.client.shared.data.ContainerNode;
 import org.aplikator.client.shared.data.Record;
 import org.aplikator.client.shared.descriptor.PropertyDTO;
 import org.aplikator.server.Context;
@@ -31,21 +32,21 @@ public class UserTriggers extends PersisterTriggers.Default {
     }
 
     @Override
-    public void onCreate(Record record, Context ctx) {
+    public void onCreate(ContainerNode node, Context ctx) {
         try {
             User user = GetCurrentLoggedUser.getCurrentLoggedUser(ctx.getHttpServletRequest());
             if ((user == null) || (!user.hasSuperAdministratorRole())) {
                 List<Integer> groupsList = GetAdminGroupIds.getAdminGroupId(ctx);
                 PropertyDTO personalAdminDTO = Structure.user.PERSONAL_ADMIN.clientClone(ctx);
-                personalAdminDTO.setValue(record, groupsList.get(0));
+                personalAdminDTO.setValue(node.getEdited(), groupsList.get(0));
             }
 
             PropertyDTO pswdDTO = Structure.user.PASSWORD.clientClone(ctx);
             String generated = GeneratePasswordUtils.generatePswd();
 
-            GeneratePasswordUtils.sendGeneratedPasswordToMail( Structure.user.EMAIL.getValue(record), Structure.user.LOGINNAME.getValue(record), generated, mailer, ctx);
+            GeneratePasswordUtils.sendGeneratedPasswordToMail( Structure.user.EMAIL.getValue(node.getEdited()), Structure.user.LOGINNAME.getValue(node.getEdited()), generated, mailer, ctx);
 
-            pswdDTO.setValue(record, PasswordDigest.messageDigest(generated));
+            pswdDTO.setValue(node.getEdited(), PasswordDigest.messageDigest(generated));
 
         } catch (NoSuchAlgorithmException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
@@ -60,7 +61,7 @@ public class UserTriggers extends PersisterTriggers.Default {
 
 
     @Override
-    public void onUpdate(Record record, Context ctx) {/*
+    public void onUpdate(ContainerNode node, Context ctx) {/*
         String[] bfs = recordDTO.getModifiedByBfs();
         if (bfs.length == 0) {
             PropertyDTO<String> pswdDTO = structure.user.PASSWORD.clientClone(ctx);

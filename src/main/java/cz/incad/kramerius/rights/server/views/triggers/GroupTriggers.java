@@ -1,16 +1,15 @@
 package cz.incad.kramerius.rights.server.views.triggers;
 
-import java.util.List;
-import java.util.logging.Logger;
-
-import org.aplikator.client.shared.data.Record;
-import org.aplikator.server.Context;
-import org.aplikator.server.persistence.PersisterTriggers;
-
 import cz.incad.kramerius.rights.server.Structure;
 import cz.incad.kramerius.rights.server.utils.GetAdminGroupIds;
 import cz.incad.kramerius.rights.server.utils.GetCurrentLoggedUser;
 import cz.incad.kramerius.security.User;
+import org.aplikator.client.shared.data.ContainerNode;
+import org.aplikator.server.Context;
+import org.aplikator.server.persistence.PersisterTriggers;
+
+import java.util.List;
+import java.util.logging.Logger;
 
 public class GroupTriggers extends PersisterTriggers.Default {
 
@@ -25,17 +24,17 @@ public class GroupTriggers extends PersisterTriggers.Default {
     }
 
     @Override
-    public void onCreate(Record record, Context ctx) {
+    public void onCreate(ContainerNode node, Context ctx) {
         User user = GetCurrentLoggedUser.getCurrentLoggedUser(ctx.getHttpServletRequest());
         if ((user == null) || (!user.hasSuperAdministratorRole())) {
             List<Integer> groupsList = GetAdminGroupIds.getAdminGroupId(ctx);
-            Structure.group.PERSONAL_ADMIN.setValue(record, groupsList.get(0));
+            Structure.group.PERSONAL_ADMIN.setValue(node.getEdited(), groupsList.get(0));
         }
     }
 
 
     @Override
-    public void onUpdate(Record record, Context ctx) {
+    public void onUpdate(ContainerNode node, Context ctx) {
         /*User user = GetCurrentLoggedUser.getCurrentLoggedUser(ctx.getHttpServletRequest());
         if ((user == null) || (!user.hasSuperAdministratorRole())) {
             PropertyDTO<Integer> propertyDTO = structure.group.PERSONAL_ADMIN.clientClone(ctx);
