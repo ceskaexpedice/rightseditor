@@ -14,10 +14,14 @@ import org.aplikator.server.function.FunctionParameters;
 import org.aplikator.server.function.FunctionResult;
 
 import java.text.MessageFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GeneratePasswordExec extends Executable {
+    private static final Logger LOGGER = Logger.getLogger(GeneratePasswordExec.class.getName());
+
 
     public static final String EMAIL_REGEXP = "^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
 
@@ -47,6 +51,7 @@ public class GeneratePasswordExec extends Executable {
             }
 
         } catch (Exception ex) {
+            LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             String failResult = I18NUtils.getLocalizedString("VygenerovatHeslo.fail.result", context);
             return new FunctionResult(MessageFormat.format(failResult, ex.getMessage()), false);
         }
