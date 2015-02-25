@@ -37,9 +37,10 @@ public class GeneratePasswordExec extends Executable {
             if ((emailAddres != null) && (validation(emailAddres))) {
                 String generated = GeneratePasswordUtils.generatePswd();
                 Record currentRecord = parameters.getClientContext().getCurrentRecord();
-                Structure.user.PASSWORD.setValue(currentRecord, PasswordDigest.messageDigest(generated));
+                Record edited = new Record(currentRecord.getPrimaryKey());
+                Structure.user.PASSWORD.setValue(edited, PasswordDigest.messageDigest(generated));
                 RecordContainer container = new RecordContainer();
-                container.addRecord(getView().getViewDTO(context), currentRecord, currentRecord, Operation.UPDATE);
+                container.addRecord(getView().getViewDTO(context), currentRecord, edited, Operation.UPDATE);
                 AplikatorService service = context.getAplikatorService();
                 service.processRecords(container);
                 GeneratePasswordUtils.sendGeneratedPasswordToMail(emailAddres, Structure.user.LOGINNAME.getValue(currentRecord), generated, mailer, context);
@@ -58,9 +59,6 @@ public class GeneratePasswordExec extends Executable {
         return new FunctionResult(result, true);
     }
 
-    public FunctionResult execute(FunctionParameters parameters){
-        return null;//TODO implementovat
-    }
 
     public Mailer getMailer() {
         return mailer;
