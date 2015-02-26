@@ -10,8 +10,8 @@ import org.aplikator.client.shared.rpc.AplikatorService;
 import org.aplikator.server.Context;
 import org.aplikator.server.descriptor.View;
 import org.aplikator.server.function.Executable;
-import org.aplikator.server.function.FunctionParameters;
-import org.aplikator.server.function.FunctionResult;
+import org.aplikator.client.shared.data.FunctionParameters;
+import org.aplikator.client.shared.data.FunctionResult;
 
 import java.text.MessageFormat;
 import java.util.logging.Level;
@@ -32,6 +32,7 @@ public class GeneratePasswordExec extends Executable {
     @Override
     public FunctionResult execute(FunctionParameters parameters, Context context) {
         String result = null;
+        boolean success = false;
         try {
             String emailAddres = Structure.user.EMAIL.getValue(parameters.getClientContext().getCurrentRecord());
             if ((emailAddres != null) && (validation(emailAddres))) {
@@ -46,6 +47,7 @@ public class GeneratePasswordExec extends Executable {
                 GeneratePasswordUtils.sendGeneratedPasswordToMail(emailAddres, Structure.user.LOGINNAME.getValue(currentRecord), generated, mailer, context);
                 String okResultString = I18NUtils.getLocalizedString("VygenerovatHeslo.ok.result", context);
                 result = MessageFormat.format(okResultString, emailAddres);
+                success= true;
             } else {
                 String okResultString = I18NUtils.getLocalizedString("VygenerovatHeslo.notvalidmail", context);
                 result = MessageFormat.format(okResultString, emailAddres);
@@ -54,9 +56,9 @@ public class GeneratePasswordExec extends Executable {
         } catch (Exception ex) {
             LOGGER.log(Level.SEVERE, ex.getMessage(), ex);
             String failResult = I18NUtils.getLocalizedString("VygenerovatHeslo.fail.result", context);
-            return new FunctionResult(MessageFormat.format(failResult, ex.getMessage()), false);
+            return new FunctionResult(MessageFormat.format(failResult, ex.getMessage()), success);
         }
-        return new FunctionResult(result, true);
+        return new FunctionResult(result, success);
     }
 
 
