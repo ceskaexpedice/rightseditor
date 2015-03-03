@@ -41,9 +41,9 @@ public class Structure extends Application {
         public Collection<GroupUserAssoction> GROUP_ASSOCIATIONS;
 
         public UserEntity() {
-            super("Users_table", "USER_ENTITY", "USER_ID");
-            NAME = stringProperty("NAME",  255, true);
-            SURNAME = stringProperty("SURNAME",  255, true);
+            super("Users_table", "USER_ENTITY", "USER_ID", "USER_ID_SEQUENCE");
+            NAME = stringProperty("NAME",  255, false);
+            SURNAME = stringProperty("SURNAME",  255, false);
             LOGINNAME = stringProperty("LOGINNAME",  255, true);
             PASSWORD = stringProperty("PSWD",  255, false);
             DEACTIVATED = booleanProperty("DEACTIVATED");
@@ -53,7 +53,7 @@ public class Structure extends Application {
 
             addIndex("UNAME_IDX", false, NAME);
             addIndex("SURNAME_IDX", false, SURNAME);
-            addIndex("LOGINNAME_IDX", false, LOGINNAME);
+            addIndex("LOGINNAME_IDX", true, LOGINNAME);
             addIndex("PASSWORD_IDX", false, PASSWORD);
             setPersistersTriggers(new UserTriggers());
         }
@@ -76,7 +76,7 @@ public class Structure extends Application {
         public Collection<GroupUserAssoction> USER_ASSOCIATIONS;
 
         public GroupEntity() {
-            super("Groups_table", "GROUP_ENTITY", "GROUP_ID");
+            super("Groups_table", "GROUP_ENTITY", "GROUP_ID", "GROUP_ID_SEQUENCE");
             GNAME = stringProperty("GNAME",  255, true);
             DESCRIPTION = stringProperty("DESCRIPTION",  1024, false);
             addIndex("GNAME_IDX", true, GNAME);
@@ -89,7 +89,7 @@ public class Structure extends Application {
         public final Reference<GroupEntity> GROUP;
 
         public GroupUserAssoction() {
-            super("GroupTable_assoc", "GROUP_USER_ASSOC", "GROUP_USER_ASSOC_ID");
+            super("GroupTable_assoc", "GROUP_USER_ASSOC", "GROUP_USER_ASSOC_ID", "GROUP_USER_ASSOC_ID_SEQUENCE");
             USERS = referenceProperty(user, "USER_ID");
             GROUP = referenceProperty(group, "GROUP_ID");
         }
@@ -106,7 +106,7 @@ public class Structure extends Application {
         public Reference<GroupEntity> GROUP;
 
         public RightsEntity() {
-            super("Rights_table", "RIGHT_ENTITY", "RIGHT_ID");
+            super("Rights_table", "RIGHT_ENTITY", "RIGHT_ID","RIGHT_ID_SEQUENCE" );
             UUID = stringProperty("UUID", 255, true);
             ACTION = stringProperty("ACTION", 255, true);
 
@@ -129,7 +129,7 @@ public class Structure extends Application {
 
         @SuppressWarnings("unchecked")
         public RightCriteriumEntity() {
-            super("Rights_criterium_table", "RIGHTS_CRITERIUM_ENTITY", "CRIT_ID");
+            super("Rights_criterium_table", "RIGHTS_CRITERIUM_ENTITY", "CRIT_ID", "CRIT_ID_SEQUENCE");
             TYPE = integerProperty("TYPE");
 
             QNAME = stringProperty("QNAME", 255, true);
@@ -146,7 +146,7 @@ public class Structure extends Application {
         public final Property<String> SHORT_DESC;
 
         public RightCriteriumParamEntity() {
-            super("Criterium_param_table", "CRITERIUM_PARAM_ENTITY", "CRIT_PARAM_ID");
+            super("Criterium_param_table", "CRITERIUM_PARAM_ENTITY", "CRIT_PARAM_ID", "CRIT_PARAM_ID_SEQUENCE");
 
             VALS = stringProperty("VALS",  1024, true);
             LONG_DESC = stringProperty("LONG_DESC",  1024, true);
