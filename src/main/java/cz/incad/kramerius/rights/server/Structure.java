@@ -48,7 +48,7 @@ public class Structure extends Application {
             PASSWORD = stringProperty("PSWD",  255, false);
             DEACTIVATED = booleanProperty("DEACTIVATED");
 
-            EMAIL = stringProperty("EMAIL",  255, false);
+            EMAIL = stringProperty("EMAIL",  255, true);
             ORGANISATION = stringProperty("ORGANISATION",  255, false);
 
             addIndex("UNAME_IDX", false, NAME);

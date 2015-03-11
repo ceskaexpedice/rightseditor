@@ -1,7 +1,7 @@
 package cz.incad.kramerius.rights.server.utils;
 
-import java.text.MessageFormat;
-import java.util.Random;
+import cz.incad.kramerius.rights.server.Mailer;
+import org.aplikator.server.Context;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,10 +10,8 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-import org.aplikator.server.Context;
-
-import cz.incad.kramerius.rights.server.Mailer;
+import java.text.MessageFormat;
+import java.util.Random;
 
 public class GeneratePasswordUtils {
 
@@ -36,6 +34,9 @@ public class GeneratePasswordUtils {
     public static final int PASSWORD_LENGTH = 8;
 
     public static void sendGeneratedPasswordToMail(String emailAddres, String loginname, String generated, Mailer mailer, Context ctx) throws MessagingException, AddressException {
+        if (emailAddres==null||"".equals(emailAddres)||loginname==null||"".equals(loginname)){
+            throw new AddressException("Invalid email or loginname");
+        }
         Session session = mailer.getSession(null, null);
         MimeMessage msg = new MimeMessage(session);
 

@@ -50,12 +50,16 @@ public class UserTriggers extends PersisterTriggers.Default {
 
         } catch (NoSuchAlgorithmException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
         } catch (UnsupportedEncodingException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
         } catch (AddressException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
         } catch (MessagingException e) {
             LOGGER.log(Level.SEVERE, e.getMessage(), e);
+            throw new RuntimeException(e);
         }
     }
 
