@@ -1,0 +1,15 @@
+#NOTE: This is an Aether internal implementation file, its format can be changed without prior notice.
+#Wed Mar 11 17:46:38 CET 2015
+http\://kramerius.googlecode.com/svn/mvnrepo/.error=
+http\://guiceyfruit.googlecode.com/svn/repo/releases/.error=
+https\://m2.duraspace.org/content/repositories/releases/.error=Could not transfer artifact org.aplikator\:aplikator\:jar\:0.3 from/to duraspace-releases (https\://m2.duraspace.org/content/repositories/releases)\: sun.security.validator.ValidatorException\: PKIX path building failed\: sun.security.provider.certpath.SunCertPathBuilderException\: unable to find valid certification path to requested target
+http\://download.java.net/maven/2/.lastUpdated=1426092393906
+https\://maven.java.net/content/repositories/snapshots/.lastUpdated=1426092395093
+@default-https\://m2.duraspace.org/content/repositories/releases/.lastUpdated=1426092394169
+http\://download.java.net/maven/2/.error=
+http\://guiceyfruit.googlecode.com/svn/repo/releases/.lastUpdated=1426092395266
+http\://aplikator.googlecode.com/svn/mvnrepository/.lastUpdated=1426092398729
+http\://repository.searchtechnologies.com/artifactory/simple/community-public/.error=
+https\://maven.java.net/content/repositories/snapshots/.error=
+http\://kramerius.googlecode.com/svn/mvnrepo/.lastUpdated=1426092395807
+http\://repository.searchtechnologies.com/artifactory/simple/community-public/.lastUpdated=1426092393572

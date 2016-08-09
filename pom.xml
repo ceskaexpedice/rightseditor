@@ -31,12 +31,22 @@
 	-->
 
     <properties>
-	<kramerius.version>5.3.1</kramerius.version>
+	<kramerius.version>5.3.3</kramerius.version>
         <gwt.version>2.7.0</gwt.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
+   <repositories>
+     <repository>
+      <id>_kramerius_deps</id>
+      <name>Kramerius deps</name>
+      <url>file://${basedir}/m_2_repo</url>
+    </repository>
+   </repositories>
+
     <dependencies>
+
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
