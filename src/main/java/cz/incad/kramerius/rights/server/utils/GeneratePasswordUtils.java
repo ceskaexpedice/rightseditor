@@ -45,10 +45,14 @@ public class GeneratePasswordUtils {
         msg.setText(message);
         msg.setSubject(I18NUtils.getLocalizedString(SUBJECT_KEY, ctx));
 
-        // mail.from
-        // msg.setFrom(new InternetAddress(d_email));
-        msg.addRecipient(Message.RecipientType.TO, new InternetAddress(emailAddres));
-        Transport.send(msg);
+       String from = mailer.getFrom();
+        if (from != null) {
+            msg.setFrom(new InternetAddress(from));
+            msg.addRecipient(Message.RecipientType.TO, new InternetAddress(emailAddres));
+            Transport.send(msg);
+        } else {
+            throw new AddressException("Property 'mail.from.user' is missing in the mail.properties");
+        }
     }
 
 }

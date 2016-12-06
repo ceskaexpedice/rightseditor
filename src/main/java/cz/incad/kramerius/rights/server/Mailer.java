@@ -7,6 +7,8 @@ public abstract class Mailer {
 
     public abstract Session getSession(String name, String pass);
 
+    public abstract String getFrom();
+    
     public class SMTPAuthenticator extends javax.mail.Authenticator {
 
         private String name;

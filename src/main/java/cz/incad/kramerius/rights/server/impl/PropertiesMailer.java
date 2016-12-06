@@ -21,8 +21,7 @@ public class PropertiesMailer extends Mailer {
     @Override
     public Session getSession(String name, String pass) {
         try {
-            Properties properties = new Properties();
-            properties.load(new FileInputStream(new File(MAIL_PROPS_PATH)));
+            Properties properties = loadProperties();
             if (name == null) {
                 name = properties.getProperty("mail.smtp.user");
             }
@@ -40,4 +39,23 @@ public class PropertiesMailer extends Mailer {
         return null;
     }
 
+    private Properties loadProperties() throws IOException, FileNotFoundException {
+        Properties properties = new Properties();
+        properties.load(new FileInputStream(new File(MAIL_PROPS_PATH)));
+        return properties;
+    }
+
+    @Override
+    public String getFrom() {
+        try {
+            Properties properties = loadProperties();
+            return properties.getProperty("mail.from.user");
+        } catch (FileNotFoundException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
+        }
+        return null;
+    }
+    
 }
